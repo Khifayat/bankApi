@@ -6,7 +6,10 @@ const mongoose = require("mongoose");
 const bodyParser = require('body-parser');
 
 const accountRoutes = require('./api/routes/account.routes');
+const depositRoutes = require('./api/routes/deposit.routes');
+
 const Account = require("./api/models/account");
+const Deposit = require("./api/models/deposit");
 
 // Constants
 const PORT = 8080;
@@ -28,11 +31,28 @@ const dummyAccount = new Account({
   current_balance: 50.50
 });
 
+const dummyDeposit = new Deposit({
+  account_from: {
+    account_number: "123455",
+    account_owner: {
+      first_name: "Dummy",
+      last_name: "Owner",
+    },
+  },
+  amount_deposited: 100.0,
+  category: {
+    type: "direct_deposit",
+  },
+});
+
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use("/account", accountRoutes);
+app.use("/deposit", depositRoutes);
+
+
 
 
 app.listen(PORT, HOST);
