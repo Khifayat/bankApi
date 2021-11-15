@@ -2,8 +2,11 @@
 const express = require("express");
 const { MongoClient } = require("mongodb");
 const mongoose = require("mongoose");
-const Account = require("./api/models/account");
+// const Account = require("./api/models/account");
 const bodyParser = require('body-parser');
+require("dotenv").config(); 
+
+var Schema = mongoose.Schema;
 
 var routes = require('./api/routes/bankRoutes'); //importing route
 
@@ -12,13 +15,51 @@ const PORT = 8080;
 const HOST = "0.0.0.0";
 
 
-mongoose
-  .connect("mongodb://localhost/BankApiDB")
-  .catch((error) => handleError(error));
-
-
 // App
 const app = express();
+
+
+mongoose
+  .connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  
+const accountSchema = new Schema({
+  account_number: {
+    type: String,
+    // required:true,
+  },
+  created_date: {
+    type: Date,
+    default: Date.now,
+  },
+  current_balance: {
+    type: Schema.Types.Decimal128,
+    default: 0.0,
+  },
+});
+
+const Account = mongoose.model('Account', accountSchema);
+
+const dummyAccount = new Account ({
+    account_number:'123455',
+    created_date: Date.now,
+    current_balance: 50.50
+
+});
+
+dummyAccount.save().then(()=> console.log("new account added"));
+
+app.get('/accounts', (req,res)=>{
+    Account.find({},(found,err)=> {
+        if(!err){
+            res.send(found);
+        }
+        console.log(err);
+        res.send("error occured!")
+    })
+})
 
 // mongoose.Promise = global.Promise;
 // // mongoose
