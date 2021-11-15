@@ -2,50 +2,11 @@
 const express = require("express");
 const { MongoClient } = require("mongodb");
 const mongoose = require("mongoose");
-
 const bodyParser = require('body-parser');
 require("dotenv").config();
-
 var routes = require('./api/routes/bankRoutes'); //importing route
 const Account = require("./api/models/account");
-
-// TODO - Remove the following
-// var Schema = mongoose.Schema;
-// const Account = mongoose.model('Account', accountSchema);
-// dummyAccount.save().then(() => console.log("new account added"));
-// mongoose.Promise = global.Promise;
-// // mongoose
-// //   .connect("mongodb://localhost:27017/Bankdb")
-// //   .catch((error) => console.error(error)); 
-//   try {
-//      mongoose.connect("mongodb://localhost:8080/Bankdb");
-//   } catch (error) {
-//     handleError(error);
-//   }
-// async function listDatabases(client) {
-//   const databasesList = await client.db().admin().listDatabases();
-
-//   console.log("Databases: ");
-//   databasesList.databases.forEach((db) => console.log(` -${db.name}`));
-// }
-// async function main() {
-//   const url =
-//     "mongodb+srv://Khifayat:BforBolu99@cluster0.2az67.mongodb.net/BudgetSmartBank?retryWrites=true&w=majority";
-//   const client = new MongoClient(url);
-
-//   try {
-//     await client.connect();
-//     await listDatabases(client);
-//   } catch (e) {
-//     console.error(e);
-//   } finally {
-//     await client.close();
-//   }
-// }
-
-// main().catch(console.error);
-
-
+const Deposit = require("./api/models/deposit");
 // Constants
 const PORT = 8080;
 const HOST = "0.0.0.0";
@@ -65,6 +26,20 @@ const dummyAccount = new Account({
   created_date: Date.now,
   current_balance: 50.50
 
+});
+
+const dummyDeposit = new Deposit({
+  account_from: {
+    account_number: "123455",
+    account_owner: {
+      first_name: "Dummy",
+      last_name: "Owner",
+    },
+  },
+  amount_deposited: 100.0,
+  category: {
+    type: "direct_deposit",
+  },
 });
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -88,11 +63,23 @@ app.get('/accounts', (req, res) => {
   Account.find({}, (found, err) => {
     if (!err) {
       res.send(found);
+      console.log("accounts")
     }
     console.log(err);
     res.send("error occured!")
   })
 })
+
+app.get("/deposits", (req, res) => {
+  Deposit.find({}, (found, err) => {
+    if (!err) {
+      res.send(found);
+      console.log("deposits");
+    }
+    console.log(err);
+    res.send("error occured!");
+  });
+});
 
 app.listen(PORT, HOST);
 console.log(`Running on http://${HOST}:${PORT}`);

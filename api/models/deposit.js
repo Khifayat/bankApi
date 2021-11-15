@@ -1,6 +1,14 @@
+"use strict";
+var mongoose = require("mongoose");
+var Schema = mongoose.Schema;
+
 var DepositsSchema = new Schema({
   account_from: {
-    type: String,
+      account_number: String,
+      account_owner:{
+        first_name: String,
+        last_name: String,
+      },
   },
   amount_deposited: {
     type: Schema.Types.Decimal128,
