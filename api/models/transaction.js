@@ -1,10 +1,13 @@
+"use strict";
+var mongoose = require("mongoose");
+var Schema = mongoose.Schema;
+
 var TransactionsSchema = new Schema({
-  type: {
-    type: String,
-    enum: ["Groceries", "Auto", "Restaurant", "bills", "subscription"],
-  },
+  category: String,
   amount: {
     type: Schema.Types.Decimal128,
   },
 });
 module.exports = mongoose.model("Transactions", TransactionsSchema);
+
+// enum: ["Groceries", "Auto", "Restaurant", "bills", "subscription"],
