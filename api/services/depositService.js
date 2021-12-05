@@ -14,8 +14,8 @@ module.exports = class DepositService {
       console.log(data);
       const deposit = {
           account_number: data.account_number,
-          owner_first_name: data.owner_first_name,
-          owner_last_name: data.owner_last_name,
+          account_from: data.account_from,
+          owner_name: data.owner_name,
           amount_deposited: data.amount_deposited,
           category:data.category,
       };

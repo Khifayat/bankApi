@@ -6,6 +6,9 @@ var AccountSchema = new Schema({
   account_number: {
     type: String,
   },
+  owner_name: {
+    type: String,
+  },
   Created_date: {
     type: Date,
     default: Date.now,

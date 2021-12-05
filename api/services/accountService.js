@@ -13,6 +13,7 @@ module.exports = class AccountService {
         try {
             const account = {
                 account_number: data.account_number,
+                owner_name:data.owner_name,
                 current_balance: data.current_balance,
             };
             const response = await new Account(account).save();

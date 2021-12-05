@@ -4,8 +4,8 @@ var Schema = mongoose.Schema;
 
 var DepositsSchema = new Schema({
     account_number: String,
-    owner_first_name: String,
-    owner_last_name: String,
+    account_from: String,
+    owner_name: String,
     amount_deposited: Schema.Types.Decimal128,
     category:String,
 });

@@ -15,5 +15,14 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Khifayat/bankApi.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Khifayat/bankApi/issues"
+  },
+  "homepage": "https://github.com/Khifayat/bankApi#readme"
 }
