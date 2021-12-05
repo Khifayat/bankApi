@@ -14,8 +14,8 @@ var AccountSchema = new Schema({
     default: Date.now,
   },
   current_balance: {
-    type: Schema.Types.Decimal128,
-    default: 0.0,
+    type: String,
+    default: "0.0",
   },
 });
 
