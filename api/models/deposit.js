@@ -6,7 +6,7 @@ var DepositsSchema = new Schema({
     account_number: String,
     account_from: String,
     owner_name: String,
-    amount_deposited: Schema.Types.Decimal128,
+    amount_deposited: String,
     category:String,
 });
 

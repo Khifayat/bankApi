@@ -20,4 +20,12 @@ module.exports = class Account {
             res.status(500).json({ error: error });
         }
     }
+    static async AddDeposit(req, res, next) {
+        try {
+            const updateAccount = await AccountService.addDeposit(req.body);
+            res.status(200).json("Deposit was added successfully to the account!!");
+        } catch (error) {
+            res.status(500).json({ error: error });
+        }
+    }
 }
