@@ -28,4 +28,13 @@ module.exports = class Account {
             res.status(500).json({ error: error });
         }
     }
+
+    static async AddTransaction(req, res, next) {
+        try {
+            const updateAccount = await AccountService.addTransaction(req.body);
+            res.status(200).json("Transaction was added successfully to the account!!");
+        } catch (error) {
+            res.status(500).json({ error: error });
+        }
+    }
 }

@@ -3,6 +3,7 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 var TransactionsSchema = new Schema({
+  account_number: String,
   category: String,
   amount: {
     type: String,
