@@ -14,10 +14,10 @@ module.exports = class AccountService {
         try {
             const filter = { account_number: data.account_number };
             const addedAccount = await Account.findOneAndUpdate(filter, {
-                deposits: [
+                $push :{ deposits: [
                     data
                 ]
-            });
+            }});
         } catch (error) {
             console.error(`could not add deposit the accounts ${error}`);
         }
