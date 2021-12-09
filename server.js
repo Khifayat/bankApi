@@ -13,9 +13,12 @@ const Account = require("./api/models/account");
 const Deposit = require("./api/models/deposit");
 const Transaction = require("./api/models/transaction");
 
+
 // Constants
 const PORT = (process.env.PORT|| 8080) ;
 const HOST = "0.0.0.0";
+
+
 
 // App
 const app = express();
@@ -26,6 +29,7 @@ mongoose.connect(process.env.MONGODB_URL, {
 }).catch(err => {
   console.error(err)
 });
+
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
