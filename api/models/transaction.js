@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 var TransactionsSchema = new Schema({
   category: String,
   amount: {
-    type: Schema.Types.Decimal128,
+    type: String,
   },
 });
 module.exports = mongoose.model("Transactions", TransactionsSchema);
