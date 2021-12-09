@@ -20,4 +20,15 @@ module.exports = class Deposit {
         res.status(500).json({ error: error });
       }
     }
+    
+    static async findDeposit(req, res, next) {
+      try {
+        const deposit = await DepositService.findDepositAccount(req.body);
+        res.status(200).json("Deposit found!!");
+      } catch (error) {
+        res.status(500).json({ error: error });
+      }
+    }
+
 };
+

@@ -23,6 +23,7 @@ module.exports = class Account {
     }
 
     static async AddDeposit (req, res, next) {
+
         try {
             const updatedAccount = await AccountService.updateAccountWithDeposit(req.body)
             res.status(200).json("account updated!!");
