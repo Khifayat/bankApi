@@ -59,7 +59,8 @@ module.exports = class AccountService {
                 account_number: data.account_number,
                 owner_name: data.owner_name,
                 current_balance: data.current_balance,
-                deposits: data.deposits
+                deposits: data.deposits,
+                transactions: data.transactions
             };
             const response = await new Account(account).save();
             return response;

@@ -10,7 +10,7 @@ var AccountSchema = new Schema({
   owner_name: {
     type: String,
   },
-  Created_date: {
+  created_date: {
     type: Date,
     default: Date.now,
   },
