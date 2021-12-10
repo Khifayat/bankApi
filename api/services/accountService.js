@@ -36,7 +36,7 @@ module.exports = class AccountService {
         try {
             const filter = { account_number: data.account_number };
             const account = await Account.find(filter) 
-            const currentAmount = account[0].current_balance 
+            const currentAmount = account[0].current_balance
             const total = parseFloat(currentAmount) - parseFloat(data.amount)
             const newBalance =  total.toString()
 
