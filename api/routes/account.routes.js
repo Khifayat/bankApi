@@ -8,5 +8,4 @@ router.post("/create-account", accountsList.CreateAccount);
 router.put("/add-deposit", accountsList.AddDeposit);
 router.put("/add-transaction", accountsList.AddTransaction);
 
-
 module.exports = router;
