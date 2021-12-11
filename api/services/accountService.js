@@ -16,15 +16,16 @@ module.exports = class AccountService {
             const filter = { account_number: data.account_number };
 
             const account = await Account.find(filter)
-            const currentAmount = account[0].current_balance 
+            const currentAmount = account[0].current_balance
             const total = parseFloat(data.amount_deposited) + parseFloat(currentAmount)
-            const newBalance =  total.toString()
+            const newBalance = total.toString()
 
             const addedAccount = await Account.findOneAndUpdate(filter, {
                 current_balance: newBalance,
-                $push :  {  deposits: [ data ]  }
-            ,});
-            
+                $push: { deposits: [data] }
+                ,
+            });
+
         } catch (error) {
             console.error(`could not add deposit the accounts ${error}`);
         }
@@ -35,20 +36,22 @@ module.exports = class AccountService {
     static async addTransaction(data) {
         try {
             const filter = { account_number: data.account_number };
-            const account = await Account.find(filter) 
+            const account = await Account.find(filter)
             const currentAmount = account[0].current_balance
             const total = parseFloat(currentAmount) - parseFloat(data.amount)
-            const newBalance =  total.toString()
+            const newBalance = total.toString()
 
-            if(total > 0){
-            const addedAccount = await Account.findOneAndUpdate(filter, {
-                current_balance: newBalance,
-                $push :{ transactions: [
-                    data
-                ]
-            }});
-       }
-    } catch (error) {
+            if (total > 0) {
+                const addedAccount = await Account.findOneAndUpdate(filter, {
+                    current_balance: newBalance,
+                    $push: {
+                        transactions: [
+                            data
+                        ]
+                    }
+                });
+            }
+        } catch (error) {
             console.error(`could not add transaction the accounts ${error}`);
         }
     }
