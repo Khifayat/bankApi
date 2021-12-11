@@ -15,13 +15,11 @@ module.exports = class Account {
     static async CreateAccount(req, res, next) {
         try {
             const account = await AccountService.createAccount(req.body);
-            // Account.findOne({_id:'xxxxxxx'}).populate('deposits', ' account_number account_from owner_name amount_deposited').exec(function(err,deposits){})
             res.status(200).json("Account added successfully!!");
         } catch (error) {
             res.status(500).json({ error: error });
         }
     }
-
     static async AddDeposit(req, res, next) {
         try {
             const updateAccount = await AccountService.addDeposit(req.body);
@@ -35,7 +33,7 @@ module.exports = class Account {
         try {
             const updateAccount = await AccountService.addTransaction(req.body);
             res.status(200).json("Transaction was added successfully to the account!!");
-          catch (error) {
+        } catch (error) {
             res.status(500).json({ error: error });
         }
     }
