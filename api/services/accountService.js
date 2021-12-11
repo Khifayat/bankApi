@@ -1,4 +1,6 @@
 const Account = require("../models/account");
+const Deposit = require("../models/deposit");
+const Transaction = require("../models/transaction");
 
 module.exports = class AccountService {
     static async getAllAccounts() {
@@ -9,41 +11,64 @@ module.exports = class AccountService {
             console.error(`could not fetch the accounts ${error}`);
         }
     }
+    static async addDeposit(data) {
+        try {
+            const filter = { account_number: data.account_number };
 
+            const account = await Account.find(filter)
+            const currentAmount = account[0].current_balance
+            const total = parseFloat(data.amount_deposited) + parseFloat(currentAmount)
+            const newBalance = total.toString()
+
+            const addedAccount = await Account.findOneAndUpdate(filter, {
+                current_balance: newBalance,
+                $push: { deposits: [data] }
+                ,
+            });
+
+        } catch (error) {
+            console.error(`could not add deposit the accounts ${error}`);
+        }
+    }
+
+
+
+    static async addTransaction(data) {
+        try {
+            const filter = { account_number: data.account_number };
+            const account = await Account.find(filter)
+            const currentAmount = account[0].current_balance
+            const total = parseFloat(currentAmount) - parseFloat(data.amount)
+            const newBalance = total.toString()
+
+            if (total > 0) {
+                const addedAccount = await Account.findOneAndUpdate(filter, {
+                    current_balance: newBalance,
+                    $push: {
+                        transactions: [
+                            data
+                        ]
+                    }
+                });
+            }
+        } catch (error) {
+            console.error(`could not add transaction the accounts ${error}`);
+        }
+    }
 
     static async createAccount(data) {
         try {
             const account = {
                 account_number: data.account_number,
-                first_name: data.first_name,
-                last_name: data.last_name,
+                owner_name: data.owner_name,
                 current_balance: data.current_balance,
-                deposits: data.deposits
+                deposits: data.deposits,
+                transactions: data.transactions
             };
             const response = await new Account(account).save();
             return response;
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     }
-
-    static async updateAccountWithDeposit(data) {
-        const accountTo = data.account_number;
-        const filter = { account_number: accountTo }
-        // const updateDeposit = {
-        //     deposits: [{
-        //         account_number: data.account_number,
-        //         account_from: data.account_from,
-        //         owner_name: data.account_number,
-        //         amount_deposited: data.amount_deposited,
-        //         category: data.category
-        //     }]
-        // }
-        // console.log(updateDeposit);
-        const accountFound = Account.findOne(filter, () => {})
-        console.log(accountFound);
-    }
 }
-
-
-

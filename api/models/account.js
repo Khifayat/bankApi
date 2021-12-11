@@ -2,10 +2,10 @@
 var mongoose = require("mongoose");
 const Account = require("../controllers/accountController");
 var Schema = mongoose.Schema;
+const Deposit = require("../models/deposit");
 
 var AccountSchema = new Schema({
   account_number: {
-    "pattern": "^[0-9]{8}$",
     type: String,
   },
   first_name: {
@@ -22,20 +22,21 @@ var AccountSchema = new Schema({
     type: String,
     default: "0.0",
   },
-
-  //added to schema 
   deposits: [
     {
-      type: mongoose.Schema.Types.ObjectId, ref: 'Deposits'
-    }
-  ],
-  transacitions: [
+      account_number: String,
+      account_from: String,
+      owner_name: String,
+      amount_deposited: String,
+      category: String,
+    }],
+  transactions: [
     {
-      type: mongoose.Schema.Types.ObjectId, ref: 'Transactions'
-    }
-  ]
+      category: String,
+      amount: {
+        type: String,
+      }
+    }]
 });
-
-
 
 module.exports = mongoose.model("Accounts", AccountSchema);

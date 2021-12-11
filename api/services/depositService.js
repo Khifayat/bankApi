@@ -11,7 +11,6 @@ module.exports = class DepositService {
   }
   static async createDeposit(data) {
     try {
-      console.log(data);
       const deposit = {
           account_number: data.account_number,
           account_from: data.account_from,
@@ -20,7 +19,6 @@ module.exports = class DepositService {
           category:data.category,
       };
       const response = await new Deposit(deposit).save();
-      console.log(response)
       return response;
     } catch (error) {
       console.log(error);
