@@ -1,5 +1,6 @@
 "use strict";
 var mongoose = require("mongoose");
+const Account = require("../controllers/accountController");
 var Schema = mongoose.Schema;
 const Deposit = require("../models/deposit");
 
@@ -7,10 +8,13 @@ var AccountSchema = new Schema({
   account_number: {
     type: String,
   },
-  owner_name: {
+  first_name: {
     type: String,
   },
-  Created_date: {
+  last_name: {
+    type: String,
+  },
+  created_date: {
     type: Date,
     default: Date.now,
   },

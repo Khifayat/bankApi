@@ -5,6 +5,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require('body-parser');
 
+
 const accountRoutes = require('./api/routes/account.routes');
 const depositRoutes = require('./api/routes/deposit.routes');
 const transactionRoutes = require('./api/routes/transaction.routes');
@@ -17,6 +18,8 @@ const Transaction = require("./api/models/transaction");
 const PORT = (process.env.PORT|| 8080) ;
 const HOST = "0.0.0.0";
 
+
+
 // App
 const app = express();
 
@@ -27,7 +30,10 @@ mongoose.connect(process.env.MONGODB_URL, {
   console.error(err)
 });
 
+
+
 app.use(express.json());
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -37,6 +43,16 @@ app.use("/transaction",transactionRoutes);
 
 
 
+app.get("/deposits", (req, res) => {
+  Deposit.find({}, (found, err) => {
+    if (!err) {
+      res.send(found);
+      console.log("deposits");
+    }
+    console.log(err);
+    res.send("error occured!");
+  });
+});
 
 app.listen(PORT, HOST);
 console.log(`Running on http://${HOST}:${PORT}`);
